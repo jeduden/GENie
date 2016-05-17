@@ -319,7 +319,7 @@
 	function premake.gcc.getquoteincludedirs(includedirs)
 		local result = { }
 		for _,dir in ipairs(includedirs) do
-			table.insert(result, "-iquote" .. _MAKE.esc(dir))
+			table.insert(result, "-iquote " .. _MAKE.esc(dir))
 		end
 		return result
 	end
