@@ -654,7 +654,9 @@
 				if #cfgcmds > #prjcmds then
 					table.insert(commands, 'if [ "${CONFIGURATION}" = "' .. xcode.getconfigname(cfg) .. '" ]; then')
 					for i = #prjcmds + 1, #cfgcmds do
-						table.insert(commands, cfgcmds[i])
+						local cmd = cfgcmds[i]
+						cmd = cmd:gsub('\\','\\\\')
+						table.insert(commands, cmd)
 					end
 					table.insert(commands, 'fi')
 				end
@@ -677,7 +679,7 @@
 				_p(3,');');
 				_p(3,'runOnlyForDeploymentPostprocessing = 0;');
 				_p(3,'shellPath = /bin/sh;');
-				_p(3,'shellScript = "%s";', table.concat(commands, "\\n"):gsub("\\","\\\\"):gsub('"', '\\"'))
+				_p(3,'shellScript = "%s";', table.concat(commands, "\\n"):gsub('"', '\\"'))
 				_p(2,'};')
 			end
 		end
